@@ -22,22 +22,14 @@ class NewsDatasourceImpl implements NewsDatasource {
   
   @override
   Future<List<Article>> fetchArticles() async {
-    // final response = await dio.get(
-    //   'https://newsapi.org/v2/top-headlines',
-    //   queryParameters: {
-    //     'country': 'us',
-    //     'apiKey': apiKey,
-    //   },
-    // );
+
     List<Article> articlesConverted = [];
 
     try {
 
-      final response = await dio.get('/everything',
+      final response = await dio.get('/top-headlines',
         queryParameters: {
-          'q': 'tesla',
-          'from': '2025-04-15',
-          'sortBy': 'publishedAt',
+          'category': 'business',
         }
       );
 
@@ -49,6 +41,7 @@ class NewsDatasourceImpl implements NewsDatasource {
         articlesConverted = articles.map(
           (article) => ArticleMapper.articleModelToEntity(article)
         ).toList();
+        
         return articlesConverted;
       } else{
         print('Error: ${response.statusCode}');

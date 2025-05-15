@@ -5,7 +5,10 @@ import 'package:noti_app/features/news/infrastructure/datasources/news_datasourc
 class NewsRepositoryImpl implements NewsRepository {
 
   final NewsDatasource datasource;
-  NewsRepositoryImpl(this.datasource);
+
+  NewsRepositoryImpl({
+    NewsDatasource? datasource
+  }): datasource = datasource ?? NewsDatasourceImpl();
   
   @override
   Future<List<Article>> getArticles() async {
