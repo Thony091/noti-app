@@ -48,8 +48,8 @@ lib/
 ##  Guia de instalación por terminal
 
 1. Clonar el repositorio
-git clone https://github.com/tu_usuario/noticias_app.git
-cd noticias_app
+git clone https://github.com/Thony091/noti-app.git
+cd noti_app
 
 2. Instalar dependencias
 flutter pub get
