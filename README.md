@@ -35,13 +35,11 @@ Para esta app se utilizo  Flutter ver 3.29.2
 ```text
 lib/
 ├── config/                 # Configuración global y entorno
-├── core/                   # (opcional) herramientas compartidas
 ├── features/
 │   └── news/
 │       ├── data/           # modelos, datasources y repositorio
 │       ├── domain/         # entidades, usecases y repositorio abstracto
 │       └── presentation/   # UI, bloc y widgets
 ├── router/                 # Configuración de go_router
-├── injection_container.dart
 ├── app.dart
 └── main.dart
