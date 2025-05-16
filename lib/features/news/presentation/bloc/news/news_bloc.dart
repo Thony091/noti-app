@@ -19,6 +19,8 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
       emit(NewsLoading());
       try {
         final articles = await newsRepository.getArticles();
+        final sportArticles = await newsRepository.getSportArticles();
+        articles.addAll(sportArticles);
         emit(NewsLoaded(articles));
       } catch (e) {
         emit(NewsError("Error al obtener noticias: ${e.toString()}"));
