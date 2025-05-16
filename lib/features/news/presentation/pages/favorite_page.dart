@@ -18,30 +18,18 @@ class FavoritePage extends StatelessWidget {
           if (state.favorites.isEmpty) {
             return const Center(child: Text('No hay favoritos'));
           }
-          return ListView.builder(
-            itemCount: state.favorites.length,
-            itemBuilder: (_, index) {
-              final article = state.favorites[index];
-              return ListTile(
-                leading: article.urlToImage.isNotEmpty
-                  ? Image.network(
-                      article.urlToImage, 
-                      width: 100, 
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) 
-                        => NullImageWidget()
-                    )
-                  : NullImageWidget(),
-                title: Text(article.title),
-                subtitle: Text(article.description),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    context.read<FavoritesBloc>().add(RemoveFavorite(article));
-                  },
-                ),
-              );
-            },
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 7),
+            child: ListView.builder(
+              itemCount: state.favorites.length,
+              itemBuilder: (_, index) {
+                final article = state.favorites[index];
+                return ArticleCardWidget(
+                  article: article,
+                  isFavPage: true,
+                );
+              },
+            ),
           );
         },
       ),
