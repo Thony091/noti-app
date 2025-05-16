@@ -7,9 +7,12 @@ class NullImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+    
     return Image.asset(
         'assets/images/no-image.jpg', 
-        width: 100, 
+        width: size.width * 0.25, 
         fit: BoxFit.cover
       );
   }

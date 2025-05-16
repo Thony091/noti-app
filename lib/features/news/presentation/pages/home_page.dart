@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(title: const Text('Noticias')),
       body: BlocBuilder<NewsBloc, NewsState>(
@@ -20,12 +21,16 @@ class HomePage extends StatelessWidget {
           if (state is NewsLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is NewsLoaded) {
-            return ListView.builder(
-              itemCount: state.articles.length,
-              itemBuilder: (_, index) {
-                final article = state.articles[index];
-                return ArticleTile(article: article);
-              },
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 7),
+              child: ListView.builder(
+                itemCount: state.articles.length,
+                itemBuilder: (_, index) {
+                  final article = state.articles[index];
+                  return ArticleCardWidget(article: article);
+                  // return ArticleTile(article: article);
+                },
+              ),
             );
           } else if (state is NewsError) {
             return Center(child: Text(state.message));
