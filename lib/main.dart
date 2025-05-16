@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:noti_app/config/constants/Environment.dart';
 import 'package:noti_app/config/router/app_router.dart';
+import 'package:noti_app/config/theme/app_theme.dart';
 
 import 'features/news/infrastructure/models/models_container.dart';
 import 'features/news/infrastructure/repositories/news_repository_impl.dart';
@@ -39,6 +40,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: AppRouter.router,
       title: 'Noticias App',
+      theme: AppTheme.getTheme(context),
     );
   }
 }
