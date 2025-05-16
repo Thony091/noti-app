@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noti_app/features/news/presentation/container.dart';
 
 import '../bloc/bloc_container.dart';
 
@@ -9,6 +10,7 @@ class FavoritePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(title: const Text('Favoritos')),
       body: BlocBuilder<FavoritesBloc, FavoritesState>(
@@ -16,15 +18,20 @@ class FavoritePage extends StatelessWidget {
           if (state.favorites.isEmpty) {
             return const Center(child: Text('No hay favoritos'));
           }
-
           return ListView.builder(
             itemCount: state.favorites.length,
             itemBuilder: (_, index) {
               final article = state.favorites[index];
               return ListTile(
                 leading: article.urlToImage.isNotEmpty
-                    ? Image.network(article.urlToImage, width: 100, fit: BoxFit.cover)
-                    : null,
+                  ? Image.network(
+                      article.urlToImage, 
+                      width: 100, 
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) 
+                        => NullImageWidget()
+                    )
+                  : NullImageWidget(),
                 title: Text(article.title),
                 subtitle: Text(article.description),
                 trailing: IconButton(

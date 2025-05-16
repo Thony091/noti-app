@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:noti_app/config/constants/Environment.dart';
 import 'package:noti_app/config/router/app_router.dart';
 
+import 'features/news/infrastructure/models/models_container.dart';
 import 'features/news/infrastructure/repositories/news_repository_impl.dart';
 import 'features/news/presentation/bloc/bloc_container.dart';
 
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
 
+  Hive.registerAdapter(SourceModelAdapter());
+  Hive.registerAdapter(ArticleModelAdapter());
+
+  await Hive.openBox<ArticleModel>('favorites');
   // await Environment.initEnvironment();
   
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => NewsBloc( NewsRepositoryImpl(), )),
-        BlocProvider(create: (context) => FavoritesBloc())
+        BlocProvider(create: (context) => FavoritesBloc( Hive.box('favorites') )),
       ],
-      
       child: const MainApp()
     )
   );

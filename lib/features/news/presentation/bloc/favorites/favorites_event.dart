@@ -21,3 +21,10 @@ class RemoveFavorite extends FavoritesEvent {
   @override
   List<Object?> get props => [article];
 }
+
+class LoadFavorites extends FavoritesEvent {
+  const LoadFavorites();
+
+  @override
+  List<Object?> get props => [];
+}

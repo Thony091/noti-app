@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:noti_app/features/news/domain/entities/article.dart';
+import 'package:noti_app/features/news/presentation/bloc/bloc_container.dart';
+import 'package:noti_app/features/news/presentation/container.dart';
 
-import '../bloc/bloc_container.dart';
+
 
 
 class HomePage extends StatelessWidget {
@@ -47,8 +49,14 @@ class ArticleTile extends StatelessWidget {
 
     return ListTile(
       leading: article.urlToImage.isNotEmpty
-          ? Image.network(article.urlToImage, width: 100, fit: BoxFit.cover)
-          : Image.asset('assets/images/no-image.jpg', width: 100, fit: BoxFit.cover),
+          ? Image.network(
+              article.urlToImage, 
+              width: 100, 
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) 
+                => NullImageWidget()
+            )
+          : NullImageWidget(),
       title: Text(article.title),
       subtitle: Text(article.description),
       trailing: IconButton(
@@ -56,8 +64,8 @@ class ArticleTile extends StatelessWidget {
         color: isFav ? Colors.red : null,
         onPressed: () {
           context.read<FavoritesBloc>().add(
-                isFav ? RemoveFavorite(article) : AddFavorite(article),
-              );
+            isFav ? RemoveFavorite(article) : AddFavorite(article),
+          );
         },
       ),
       onTap: () {
@@ -66,3 +74,4 @@ class ArticleTile extends StatelessWidget {
     );
   }
 }
+
