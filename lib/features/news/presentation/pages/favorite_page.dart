@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti_app/features/news/presentation/container.dart';
@@ -24,9 +25,11 @@ class FavoritePage extends StatelessWidget {
               itemCount: state.favorites.length,
               itemBuilder: (_, index) {
                 final article = state.favorites[index];
-                return ArticleCardWidget(
-                  article: article,
-                  isFavPage: true,
+                return FadeInRight(
+                  child: ArticleCardWidget(
+                    article: article,
+                    isFavPage: true,
+                  ),
                 );
               },
             ),

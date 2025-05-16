@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti_app/features/news/domain/entities/article.dart';
 import 'package:noti_app/features/news/presentation/bloc/bloc_container.dart';
 import 'package:noti_app/features/news/presentation/container.dart';
-import 'package:noti_app/features/news/presentation/shared/widgets/custom_icon_button.dart';
 
 class ArticleCardWidget extends StatelessWidget {
 
@@ -18,19 +17,23 @@ class ArticleCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
     final isFav = context.select<FavoritesBloc, bool>(
       (bloc) => bloc.state.favorites.any((a) => a.url == article.url),
     );
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(25),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(25),
+        
+      ),
       child: Container(
         margin: const EdgeInsets.only(bottom: 15),
         height: 200,
         width: size.width * 0.95,
         decoration: BoxDecoration(
-          // borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(25),
           boxShadow: const [
             BoxShadow(
               color: Colors.white,
@@ -42,7 +45,7 @@ class ArticleCardWidget extends StatelessWidget {
         child: Row(
           children: [
             Image.network(
-              height: 230,
+              height: 200,
               width: size.width * 0.25,
               article.urlToImage,
               fit: BoxFit.cover,
@@ -72,12 +75,14 @@ class ArticleCardWidget extends StatelessWidget {
                   children: [
                     Text(
                       article.title,
+                      style: textStyle.titleLarge,
                       maxLines: 1,
                     ),
                     const SizedBox(height: 5),
                     Text(
                       article.description,
-                      maxLines: 2,
+                      style: textStyle.bodyMedium,
+                      maxLines: 5,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 20),
@@ -88,20 +93,19 @@ class ArticleCardWidget extends StatelessWidget {
             ),
             SizedBox(
               width: size.width * 0.15,
-              child: 
-                !isFavPage
-                  ? CustomIconButton(
-                      icon: Icons.favorite,
-                      size: 30,
-                      color: isFav ? Colors.red : null,
-                      onTap: () => context.read<FavoritesBloc>().add(
-                        isFav ? RemoveFavorite(article) : AddFavorite(article))
-                    )
-                  : CustomIconButton(
-                      icon: Icons.delete,
-                      size: 30,
-                      onTap: () => context.read<FavoritesBloc>().add(RemoveFavorite(article))
-                    )
+              child: !isFavPage
+                ? CustomIconButton(
+                    icon: Icons.favorite,
+                    size: 30,
+                    color: isFav ? Colors.red : null,
+                    onTap: () => context.read<FavoritesBloc>().add(
+                      isFav ? RemoveFavorite(article) : AddFavorite(article))
+                  )
+                : CustomIconButton(
+                    icon: Icons.delete,
+                    size: 30,
+                    onTap: () => context.read<FavoritesBloc>().add(RemoveFavorite(article))
+                  )
             )
           ]
         ),

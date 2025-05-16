@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,8 +28,7 @@ class HomePage extends StatelessWidget {
                 itemCount: state.articles.length,
                 itemBuilder: (_, index) {
                   final article = state.articles[index];
-                  return ArticleCardWidget(article: article);
-                  // return ArticleTile(article: article);
+                  return FadeInUp(child: ArticleCardWidget(article: article));
                 },
               ),
             );
