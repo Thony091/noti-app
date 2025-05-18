@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class NullImageWidget extends StatelessWidget {
+  
+  final isCompleteNew;
+
   const NullImageWidget({
     super.key,
+    this.isCompleteNew = false,
   });
 
   @override
@@ -12,7 +16,9 @@ class NullImageWidget extends StatelessWidget {
     
     return Image.asset(
         'assets/images/no-image.jpg', 
-        width: size.width * 0.25, 
+        width: !isCompleteNew 
+          ? size.width * 0.25 
+          : size.width * 0.65,
         fit: BoxFit.cover
       );
   }

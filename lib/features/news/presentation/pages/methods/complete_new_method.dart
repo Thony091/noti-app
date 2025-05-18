@@ -36,7 +36,7 @@ Future<dynamic> completeNewMethod({ required context, required Article article, 
                     child: Padding(
                       padding: const EdgeInsets.all(15),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             article.title,
@@ -52,7 +52,7 @@ Future<dynamic> completeNewMethod({ required context, required Article article, 
                               width: size.width * 0.88,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) => 
-                                NullImageWidget(),
+                                NullImageWidget( isCompleteNew: true),
                               loadingBuilder: (context, child, loadingProgress) {
                                 if (loadingProgress == null) return child;
                                 return Image.asset(
@@ -74,14 +74,20 @@ Future<dynamic> completeNewMethod({ required context, required Article article, 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                article.author, 
-                                style: textTheme.bodyMedium,
-                                textAlign: TextAlign.left,
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth: size.width * 0.5,
+                                ),
+                                child: Text(
+                                  article.author, 
+                                  style: textTheme.titleMedium,
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                               Text(
                                 '${article.publishedAt.toLocal()}'.split(' ')[0],
-                                style: Theme.of(context).textTheme.labelMedium,
+                                style: Theme.of(context).textTheme.titleMedium,
                               )
                             ],
                           ),
@@ -103,12 +109,20 @@ Future<dynamic> completeNewMethod({ required context, required Article article, 
                               size: 30,
                               color: isFav ? Colors.red : null,
                               onTap: () => context.read<FavoritesBloc>().add(
-                                isFav ? RemoveFavorite(article) : AddFavorite(article))
+                                isFav 
+                                  ? RemoveFavorite(article) 
+                                  : AddFavorite(article)
+                              )
                             )
                           : CustomIconButton(
-                              icon: Icons.delete,
+                              icon: isFav 
+                                ? Icons.delete 
+                                : Icons.done_outline_outlined,
                               size: 30,
-                              onTap: () => context.read<FavoritesBloc>().add(RemoveFavorite(article))
+                              color: !isFav ? Colors.red : null,
+                              onTap: isFav 
+                                ? () => context.read<FavoritesBloc>().add(RemoveFavorite(article))
+                                : () {},
                             ),
 
                         TextButton.icon(

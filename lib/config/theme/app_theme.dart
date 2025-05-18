@@ -25,6 +25,10 @@ class AppTheme {
           fontSize: 15,
           fontWeight: FontWeight.w300,
         ),
+        titleMedium: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        )
       ),
     );
   }
