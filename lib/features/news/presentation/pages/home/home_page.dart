@@ -2,9 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:noti_app/features/news/presentation/bloc/bloc_container.dart';
 import 'package:noti_app/features/news/presentation/container.dart';
-import 'package:noti_app/features/news/presentation/pages/methods/complete_new_method.dart';
 
 
 
@@ -16,7 +14,26 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(title: const Text('Noticias')),
+      appBar: AppBar(
+        title: const Text('Noticias'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // showSearch<Article?>(
+              //   context: context, 
+              //   delegate: SearchArticleDelegate()
+              // );
+            },
+            icon: Container(
+              padding: const EdgeInsets.only(right: 20),
+              child: const Icon(
+                Icons.search,
+                size: 30,
+              ),
+            ),
+          )
+        ],
+      ),
       body: BlocBuilder<NewsBloc, NewsState>(
         builder: (context, state) {
           if (state is NewsLoading) {
