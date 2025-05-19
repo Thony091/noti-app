@@ -1,11 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:noti_app/features/news/presentation/container.dart';
-import 'package:noti_app/features/news/presentation/pages/methods/complete_new_method.dart';
-
-import '../bloc/bloc_container.dart';
-
 
 class FavoritePage extends StatelessWidget {
   const FavoritePage({super.key});
