@@ -12,7 +12,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final Box<ArticleModel> favoritesBox;
 
   FavoritesBloc( this.favoritesBox) : super( 
-    FavoritesState( 
+    FavoritesState(
         favoritesBox.values
           .map( (a) => ArticleMapper.articleModelToEntity(a) )
           .toList()

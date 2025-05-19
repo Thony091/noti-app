@@ -53,6 +53,7 @@ class NewsDatasourceImpl implements NewsDatasource {
   }
 
 
+  @override
   Future<List<Article>> fetchSportArticles() async {
 
     List<Article> articlesConverted = [];
@@ -85,6 +86,43 @@ class NewsDatasourceImpl implements NewsDatasource {
       return articlesConverted;
     }
 
+  }
+  
+  @override
+  Future<List<Article>> searchNewsByQuery( String query, String from, String to ) async {
+    List<Article> articles = [];
+
+    try {
+
+      final response = await dio.get('/everything',
+        queryParameters: {
+          'query': query,
+          'from': from,
+          'to': to,
+          'sortBy': 'popularity',
+          'apiKey': Environment.newsApiKey, 
+        }
+      );
+
+      if (response.statusCode == 200) {
+        final articlesModel = (response.data['articles'] as List)
+          .map((json) => ArticleModel.fromJson(json))
+          .toList();
+
+        articles = articlesModel.map(
+          (article) => ArticleMapper.articleModelToEntity(article)
+        ).toList();
+        
+        return articles;
+      } else{
+        print('Error: ${response.statusCode}');
+        return articles;
+      }
+
+    } catch (e) {
+      print('Error: $e');
+      return articles;
+    }
   }
 
 
