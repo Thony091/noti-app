@@ -19,4 +19,9 @@ class NewsRepositoryImpl implements NewsRepository {
     return await datasource.fetchSportArticles();
   }
 
+  @override
+  Future<List<Article>> searchNewsByQuery( String query, String from, String to ) async {
+    return await datasource.searchNewsByQuery(query, from, to);
+  }
+
 }
