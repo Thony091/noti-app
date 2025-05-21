@@ -13,21 +13,23 @@ class ScaffoldWithNavBar extends StatefulWidget {
 }
 
 class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
-  int _selectedIndex = 0;
+  static const tabs = ['/home', '/favorite'];
 
   void _onTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-      context.go(index == 0 ? '/home' : '/favorite');
-    });
+    context.push(tabs[index]);
   }
 
   @override
   Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).uri.toString();
+
+    final index = tabs.indexWhere((t) => location.startsWith(t));
+    final selectedIndex = index == -1 ? 0 : index;
+
     return Scaffold(
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
+        currentIndex: selectedIndex,
         onTap: _onTap,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),

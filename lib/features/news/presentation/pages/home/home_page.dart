@@ -1,68 +1,51 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:noti_app/features/news/presentation/container.dart';
+import 'package:noti_app/features/news/presentation/pages/home/delegate/search_news_delegate.dart';
+import 'package:noti_app/features/news/presentation/pages/home/widgets/my_bloc_builder_list_widget.dart';
 
-
-
-
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<NewsBloc>().add(FetchNews());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    
+
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Noticias'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              // showSearch<Article?>(
-              //   context: context, 
-              //   delegate: SearchArticleDelegate()
-              // );
-            },
-            icon: Container(
-              padding: const EdgeInsets.only(right: 20),
-              child: const Icon(
-                Icons.search,
-                size: 30,
-              ),
+      body: CustomScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        slivers: [
+          SliverPersistentHeader(
+            pinned: true,
+            floating: true,
+            delegate: SearchNewsDelegate(
+              title: 'Noticias',
+              statusBarHeight: statusBarHeight,
+              maxExtentHeight: statusBarHeight * 4,
+              searchController: _searchController,
+              onSearch: (query) {
+                context.read<SearchBloc>().add(SearchArticles( query ));
+              },
             ),
-          )
+          ),
+          MyBlocBuilderListWidget(),
         ],
-      ),
-      body: BlocBuilder<NewsBloc, NewsState>(
-        builder: (context, state) {
-          if (state is NewsLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is NewsLoaded) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 7),
-              child: ListView.builder(
-                itemCount: state.articles.length,
-                itemBuilder: (_, index) {
-                  final article = state.articles[index];
-                  return GestureDetector(
-                    child: FadeInUp(
-                      child: ArticleCardWidget(
-                        article: article
-                      )
-                    ),
-                    onTap: () {
-                      completeNewMethod(context: context, article: article);
-                    }
-                  );
-                },
-              ),
-            );
-          } else if (state is NewsError) {
-            return Center(child: Text(state.message));
-          }
-          return const SizedBox.shrink();
-        },
       ),
     );
   }
