@@ -25,6 +25,7 @@ void main() async {
       providers: [
         BlocProvider(create: (context) => NewsBloc( NewsRepositoryImpl(), )),
         BlocProvider(create: (context) => FavoritesBloc( Hive.box('favorites') )),
+        BlocProvider(create: (context) => SearchBloc( NewsRepositoryImpl() )),
       ],
       child: const MainApp()
     )

@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
+
 import 'package:noti_app/config/constants/Environment.dart';
 import 'package:noti_app/features/news/domain/datasources/news_datasource.dart';
 import 'package:noti_app/features/news/domain/entities/article.dart';
@@ -10,7 +12,6 @@ class NewsDatasourceImpl implements NewsDatasource {
   final dio = Dio(BaseOptions(
       baseUrl: 'https://newsapi.org/v2',
       queryParameters: {
-        'country': 'us',
         'apiKey': Environment.newsApiKey,
       }
     )
@@ -27,6 +28,7 @@ class NewsDatasourceImpl implements NewsDatasource {
       final response = await dio.get('/top-headlines',
         queryParameters: {
           'category': 'business',
+          'country': 'us',
         }
       );
 
@@ -63,6 +65,7 @@ class NewsDatasourceImpl implements NewsDatasource {
       final response = await dio.get('/top-headlines',
         queryParameters: {
           'category': 'sports',
+          'country': 'us',
         }
       );
 
@@ -89,18 +92,18 @@ class NewsDatasourceImpl implements NewsDatasource {
   }
   
   @override
-  Future<List<Article>> searchNewsByQuery( String query, String from, String to ) async {
+  Future<List<Article>> searchNewsByQuery( String query ) async {
     List<Article> articles = [];
 
     try {
 
+      final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
       final response = await dio.get('/everything',
         queryParameters: {
-          'query': query,
-          'from': from,
-          'to': to,
+          'q': query,
+          'from': today.toString(),
+          'to': today.toString(),
           'sortBy': 'popularity',
-          'apiKey': Environment.newsApiKey, 
         }
       );
 
@@ -119,9 +122,14 @@ class NewsDatasourceImpl implements NewsDatasource {
         return articles;
       }
 
-    } catch (e) {
-      print('Error: $e');
-      return articles;
+    } on DioException catch (e) {
+      // Si la respuesta incluye cuerpo, imprímelo
+      if (e.response != null) {
+        print('URL:  ${e.requestOptions.uri}');
+        print('BODY: ${e.response!.data}');
+      }
+      rethrow;
+      // return articles;
     }
   }
 
