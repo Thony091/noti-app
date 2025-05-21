@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:noti_app/core/core_container.dart';
 import 'package:noti_app/features/news/domain/domain_container.dart';
 import 'package:noti_app/features/news/infrastructure/infrastructure_container.dart';
 
@@ -10,18 +12,34 @@ class NewsRepositoryImpl implements NewsRepository {
   }): datasource = datasource ?? NewsDatasourceImpl();
   
   @override
-  Future<List<Article>> getArticles() async {
-    return await datasource.fetchArticles();
+  Future<Either<Failure,List<Article>>> getArticles() async {
+    try {
+      final articles = await datasource.fetchArticles();
+      return Right(articles);
+    } on Exception catch (e) {
+      return Left(ErrorMapper.map(e));
+    }
+    // return await datasource.fetchArticles();
   }
 
   @override
-  Future<List<Article>> getSportArticles() async {
-    return await datasource.fetchSportArticles();
+  Future<Either<Failure,List<Article>>> getSportArticles() async {
+    try {
+      final articles = await datasource.fetchSportArticles();
+      return Right(articles);
+    } on Exception catch (e) {
+      return Left(ErrorMapper.map(e));
+    }
+    // return await datasource.fetchSportArticles();
   }
 
   @override
-  Future<List<Article>> searchNewsByQuery( String query ) async {
-    return await datasource.searchNewsByQuery( query );
+  Future<Either<Failure, List<Article>>> searchNewsByQuery(String query) async {
+    try {
+      final articles = await datasource.searchNewsByQuery(query);
+      return Right(articles);
+    } on Exception catch (e) {
+      return Left(ErrorMapper.map(e));
+    }
   }
-
 }

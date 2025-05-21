@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:noti_app/config/constants/Environment.dart';
@@ -101,8 +102,8 @@ class NewsDatasourceImpl implements NewsDatasource {
       final response = await dio.get('/everything',
         queryParameters: {
           'q': query,
-          'from': today.toString(),
-          'to': today.toString(),
+          'fro': today.toString(),
+          'to': today,
           'sortBy': 'popularity',
         }
       );
@@ -125,7 +126,7 @@ class NewsDatasourceImpl implements NewsDatasource {
     } on DioException catch (e) {
       // Si la respuesta incluye cuerpo, imprímelo
       if (e.response != null) {
-        print('URL:  ${e.requestOptions.uri}');
+        debugPrint('URL:  ${e.requestOptions.uri}');
         print('BODY: ${e.response!.data}');
       }
       rethrow;
