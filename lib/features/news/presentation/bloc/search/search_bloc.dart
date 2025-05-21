@@ -18,16 +18,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         return;
       }
       emit(SearchLoading());
-      try {
-        final articles = await newsRepository.searchNewsByQuery( event.query );
-        if (articles.isEmpty) {
-          emit(SearchEmpty());
-        } else {
-          emit(SearchLoaded(articles));
-        }
-      } catch (e) {
-        emit(SearchError('->Error en la Busqueda: $e')); 
-      }
+      final articles = await newsRepository.searchNewsByQuery( event.query );
+      articles.fold(
+        (failure) => emit(SearchError(failure.message)),
+        (articles) => articles.isEmpty ? emit(SearchEmpty()) : emit(SearchLoaded(articles))
+      );
     });
   }
 }

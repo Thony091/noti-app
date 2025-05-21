@@ -25,3 +25,5 @@ class NewsError extends NewsState {
   @override
   List<Object?> get props => [message];
 }
+
+class NewsEmpty extends NewsState {}
