@@ -6,7 +6,7 @@ class AppTheme {
     return ThemeData(
       primarySwatch: Colors.blue,
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         elevation: 0,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -14,6 +14,10 @@ class AppTheme {
         elevation: 0,
       ),
       textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+        ),
         titleLarge: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,

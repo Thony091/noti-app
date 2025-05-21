@@ -31,7 +31,11 @@ class FavoritePage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    completeNewMethod(context: context, article: article, isFavPage: true);
+                    completeNewMethod(
+                      context: context, 
+                      article: article, 
+                      isFavPage: true
+                    );
                   }
                 );
               },

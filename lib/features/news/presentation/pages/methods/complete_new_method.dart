@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:noti_app/features/news/domain/entities/article.dart';
-import 'package:noti_app/features/news/presentation/bloc/favorites/favorites_bloc.dart';
+import 'package:noti_app/features/news/domain/domain_container.dart';
 import 'package:noti_app/features/news/presentation/container.dart';
 
 Future<dynamic> completeNewMethod({ required context, required Article article, bool isFavPage = false}) {
@@ -102,7 +101,6 @@ Future<dynamic> completeNewMethod({ required context, required Article article, 
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
                         !isFavPage
                           ? CustomIconButton(
                               icon: Icons.favorite,

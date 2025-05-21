@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti_app/features/news/domain/entities/article.dart';
-import 'package:noti_app/features/news/presentation/bloc/bloc_container.dart';
 import 'package:noti_app/features/news/presentation/container.dart';
 
 class ArticleCardWidget extends StatelessWidget {
@@ -29,7 +28,7 @@ class ArticleCardWidget extends StatelessWidget {
         
       ),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 15),
+        margin: const EdgeInsets.only(bottom: 15, top: 5),
         height: 200,
         width: size.width * 0.95,
         decoration: BoxDecoration(
