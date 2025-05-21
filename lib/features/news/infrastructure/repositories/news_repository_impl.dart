@@ -20,8 +20,8 @@ class NewsRepositoryImpl implements NewsRepository {
   }
 
   @override
-  Future<List<Article>> searchNewsByQuery( String query, String from, String to ) async {
-    return await datasource.searchNewsByQuery(query, from, to);
+  Future<List<Article>> searchNewsByQuery( String query ) async {
+    return await datasource.searchNewsByQuery( query );
   }
 
 }
