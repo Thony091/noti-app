@@ -28,12 +28,17 @@ Future<dynamic> completeNewMethod({ required context, required Article article, 
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(30),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        top: 15,
+                        bottom: 5,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -42,7 +47,7 @@ Future<dynamic> completeNewMethod({ required context, required Article article, 
                             style: textTheme.titleLarge,
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 10),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
@@ -63,13 +68,13 @@ Future<dynamic> completeNewMethod({ required context, required Article article, 
                               },
                             ),
                           ),
-                          const SizedBox(height: 25),
+                          const SizedBox(height: 20),
                           Text( 
                             article.content, 
                             style: textTheme.bodyMedium,
                             textAlign: TextAlign.justify,
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -93,51 +98,55 @@ Future<dynamic> completeNewMethod({ required context, required Article article, 
                         ],
                       ),
                     ),
-                  ),
-                  
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        !isFavPage
-                          ? CustomIconButton(
-                              icon: Icons.favorite,
-                              size: 30,
-                              color: isFav ? Colors.red : null,
-                              onTap: () => context.read<FavoritesBloc>().add(
-                                isFav 
-                                  ? RemoveFavorite(article) 
-                                  : AddFavorite(article)
+                
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        bottom: 15,
+                        top: 5,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          !isFavPage
+                            ? CustomIconButton(
+                                icon: Icons.favorite,
+                                size: 30,
+                                color: isFav ? Colors.red : null,
+                                onTap: () => context.read<FavoritesBloc>().add(
+                                  isFav 
+                                    ? RemoveFavorite(article) 
+                                    : AddFavorite(article)
+                                )
                               )
-                            )
-                          : CustomIconButton(
-                              icon: isFav 
-                                ? Icons.delete 
-                                : Icons.done_outline_outlined,
+                            : CustomIconButton(
+                                icon: isFav 
+                                  ? Icons.delete 
+                                  : Icons.done_outline_outlined,
+                                size: 30,
+                                color: !isFav ? Colors.red : null,
+                                onTap: isFav 
+                                  ? () => context.read<FavoritesBloc>().add(RemoveFavorite(article))
+                                  : () {},
+                              ),
+                
+                          TextButton.icon(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(
+                              Icons.close,
                               size: 30,
-                              color: !isFav ? Colors.red : null,
-                              onTap: isFav 
-                                ? () => context.read<FavoritesBloc>().add(RemoveFavorite(article))
-                                : () {},
                             ),
-
-                        TextButton.icon(
-                          onPressed: () => Navigator.pop(context),
-                          icon: const Icon(
-                            Icons.close,
-                            size: 30,
+                            label: const Text('Cerrar'),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Colors.red.withOpacity(.1)),
+                            ),
                           ),
-                          label: const Text('Cerrar'),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.red.withOpacity(.1)),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

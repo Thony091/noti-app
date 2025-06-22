@@ -17,7 +17,6 @@ class ArticleCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
-    final size = MediaQuery.of(context).size;
     final isFav = context.select<FavoritesBloc, bool>(
       (bloc) => bloc.state.favorites.any((a) => a.url == article.url),
     );
@@ -28,85 +27,84 @@ class ArticleCardWidget extends StatelessWidget {
         
       ),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 15, top: 5),
-        height: 200,
-        width: size.width * 0.95,
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(25),
           boxShadow: const [
             BoxShadow(
-              color: Colors.white,
+              color: Colors.black12,
               blurRadius: 5,
               offset: Offset(0, 3)
             ),
           ]
         ),
-        child: Row(
-          children: [
-            Image.network(
-              height: 200,
-              width: size.width * 0.25,
-              article.urlToImage,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => 
-                NullImageWidget(),
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Image.asset(
-                  'assets/loaders/bottle-loader.gif',
-                  width: size.width * 0.25,
-                  height: 100,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(25),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 100,
+                height: 200,
+                child: Image.network(
+                  article.urlToImage,
                   fit: BoxFit.cover,
-                );
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 5),
-              child: Container(
-                width: size.width * 0.55,
-                padding: const EdgeInsets.only(
-                  left: 5,
-                  top: 5
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      article.title,
-                      style: textStyle.titleLarge,
-                      maxLines: 1,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      article.description,
-                      style: textStyle.bodyMedium,
-                      maxLines: 5,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 20),
-              
-                  ],
+                  errorBuilder: (context, error, stackTrace) => 
+                    NullImageWidget(),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Image.asset(
+                      'assets/loaders/bottle-loader.gif',
+                      fit: BoxFit.cover,
+                    );
+                  },
                 ),
               ),
-            ),
-            SizedBox(
-              width: size.width * 0.15,
-              child: !isFavPage
-                ? CustomIconButton(
-                    icon: Icons.favorite,
-                    size: 30,
-                    color: isFav ? Colors.red : null,
-                    onTap: () => context.read<FavoritesBloc>().add(
-                      isFav ? RemoveFavorite(article) : AddFavorite(article))
-                  )
-                : CustomIconButton(
-                    icon: Icons.delete,
-                    size: 30,
-                    onTap: () => context.read<FavoritesBloc>().add(RemoveFavorite(article))
-                  )
-            )
-          ]
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        article.title,
+                        style: textStyle.titleLarge?.copyWith(fontSize: 16),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        article.description,
+                        style: textStyle.bodyMedium,
+                        textAlign: TextAlign.justify,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8, right: 8),
+                child: !isFavPage
+                  ? CustomIconButton(
+                      icon: Icons.favorite,
+                      size: 30,
+                      color: isFav ? Colors.red : null,
+                      onTap: () => context.read<FavoritesBloc>().add(
+                        isFav ? RemoveFavorite(article) : AddFavorite(article))
+                    )
+                  : CustomIconButton(
+                      icon: Icons.delete,
+                      size: 30,
+                      onTap: () => context.read<FavoritesBloc>().add(RemoveFavorite(article))
+                    )
+              )
+            ]
+          ),
         ),
       ),
     );
