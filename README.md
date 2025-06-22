@@ -89,9 +89,9 @@ El proyecto sigue los principios de la **Arquitectura Limpia**, separando las re
     ```
 
 2.  **Crea el archivo de configuración de entorno:**
-    Crea un archivo llamado `.env` en la raíz del proyecto y añade tu API Key:
+    Cambia el nombre al archivo llamado `.env.template` a `.env` en la raíz del proyecto y añade tu API Key:
     ```
-    NEWS_API_KEY=TU_API_KEY_AQUÍ
+    NEWS_API_KEY="TU_API_KEY_AQUÍ"
     ```
     *Nota: Asegúrate de que tu código esté preparado para leer esta variable (por ejemplo, usando `flutter_dotenv`).*
 
