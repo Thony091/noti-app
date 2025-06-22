@@ -26,7 +26,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     final statusBarHeight = MediaQuery.of(context).padding.top;
-
+    final size = MediaQuery.of(context).size;
+    
     return Scaffold(
       body: CustomScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             delegate: SearchNewsDelegate(
               title: 'Noticias',
               statusBarHeight: statusBarHeight,
-              maxExtentHeight: 180,
+              maxExtentHeight: size.height < 700 ? 145 : 180,
               searchController: _searchController,
               onSearch: (query) {
                 context.read<SearchBloc>().add(SearchArticles( query ));

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:noti_app/config/constants/Environment.dart';
+import 'package:noti_app/config/constants/environment.dart';
 import 'package:noti_app/config/router/app_router.dart';
 import 'package:noti_app/config/theme/app_theme.dart';
 
@@ -18,7 +18,7 @@ void main() async {
   Hive.registerAdapter(ArticleModelAdapter());
 
   await Hive.openBox<ArticleModel>('favorites');
-  // await Environment.initEnvironment();
+  await Environment.initEnvironment();
   
   runApp(
     MultiBlocProvider(
