@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:noti_app/config/constants/Environment.dart';
+import 'package:noti_app/config/constants/environment.dart';
 import 'package:noti_app/features/news/domain/datasources/news_datasource.dart';
 import 'package:noti_app/features/news/domain/entities/article.dart';
 import 'package:noti_app/features/news/infrastructure/mappers/article_mapper.dart';
