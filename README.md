@@ -67,6 +67,7 @@ El proyecto sigue los principios de la **Arquitectura Limpia**, separando las re
 │
 ├── app.dart # Widget raíz que configura la aplicación.
 └── main.dart # Punto de entrada de la aplicación.
+```
 
 ### Flujo de Datos
 
