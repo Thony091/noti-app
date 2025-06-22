@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
             delegate: SearchNewsDelegate(
               title: 'Noticias',
               statusBarHeight: statusBarHeight,
-              maxExtentHeight: statusBarHeight * 4,
+              maxExtentHeight: 180,
               searchController: _searchController,
               onSearch: (query) {
                 context.read<SearchBloc>().add(SearchArticles( query ));
