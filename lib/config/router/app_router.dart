@@ -7,19 +7,27 @@ class AppRouter {
   static final router = GoRouter(
     initialLocation: '/home',
     routes: [
-      ShellRoute(
-        builder: (context, state, child) {
-          return ScaffoldWithNavBar(child: child);
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return ScaffoldWithNavBar(navigationShell: navigationShell);
         },
-        routes: [
-          GoRoute(
-            path: '/home',
-            builder: (_, __) => const HomePage(),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/home',
+                builder: (_, __) => const HomePage(),
+              ),
+            ],
           ),
-          GoRoute(
-            path: '/favorite',
-            builder: (_, __) => const FavoritePage(),
-          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/favorite',
+                builder: (_, __) => const FavoritePage(),
+              ),
+            ],
+          )
         ],
       ),
     ],
